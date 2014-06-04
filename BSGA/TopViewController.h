@@ -52,7 +52,6 @@ enum E_TRANSITION_TYPE {
     IBOutlet UIButton *memoButton;
     
     IBOutlet UIButton *bsgaButton;
-    IBOutlet UIButton *twitterButton;
     IBOutlet UIButton *logButton;
     IBOutlet UIButton *memoDebugButton;
     

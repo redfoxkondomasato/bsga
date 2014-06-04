@@ -96,10 +96,6 @@
          forControlEvents:UIControlEventTouchUpInside];
     [bsgaButton setExclusiveTouch:YES];
     
-    [twitterButton addTarget:self
-                      action:@selector(twitterButtonPushed)
-            forControlEvents:UIControlEventTouchUpInside];
-    
     [blogButton addTarget:self
                    action:@selector(blogButtonPushed)
          forControlEvents:UIControlEventTouchUpInside];
@@ -484,33 +480,8 @@
     NSURL *url = [NSURL URLWithString:@"http://ocogamas.blog.fc2.com/blog-entry-1.html"];
     [[UIApplication sharedApplication] openURL:url];
 }
-/************************************************
- Twitterボタン（販促）
- ************************************************/
-- (void)twitterButtonPushed {
-    
-    GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
-    int shokyu = 0;
-    int chukyu = 0;
-    int jokyu = 0;
-    int chokyu = 0;
-    for (int i=0; i<180; i++) {
-        if ([gameDataEntity getStageClearStatusWithLevel:0 stage:i] > -2) {
-            shokyu = i+1;
-        }
-        if ([gameDataEntity getStageClearStatusWithLevel:1 stage:i] > -2) {
-            chukyu = i+1;
-        }
-        if ([gameDataEntity getStageClearStatusWithLevel:2 stage:i] > -2) {
-            jokyu = i+1;
-        }
-        if (i<10) {
-            if ([gameDataEntity getStageClearStatusWithLevel:3 stage:i] > -2) {
-                chokyu = i+1;
-            }
-        }
-    }    
-}
+
+
 
 /************************************************
  logボタン
