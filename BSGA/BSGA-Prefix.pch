@@ -1,0 +1,47 @@
+//
+// Prefix header for all source files of the 'BSGA' target in the 'BSGA' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+
+#ifdef DEBUG
+#define PrintLog(format, ...) NSLog((@"%d: %s: " format), __LINE__, __FUNCTION__, ##__VA_ARGS__)
+#else
+#define PrintLog(format, ...)
+#endif
+
+#define DEBUG_MODE 1
+
+
+// 設定項目にする
+#define kControllerStopDistance 14 // 操作しても反応しない範囲
+#define kControllerStyle 0 // 0:位置固定 1:タップした位置
+// 定数
+#define kDirectionUp   -1
+#define kDirectionDown  1
+#define kLongAnimationDuration 0.5f
+#define kLong2AnimationDuration 0.8f
+
+#define kLongLongAnimationDuration 2.5f // テスト用 TODO
+#define kFlipAnimationScale 0.78f
+#define kFlipXAnimationScale 0.58f
+#define kM34 -1.0f/320.0f
+
+#define kAtlasPlayerKomaFu CGRectMake(0, 141, 18, 18)
+
+#define kInAppPurchaseEasyMode @"jp.co.ocogamas.bsga.easymode"
+#define kInAppPurchaseGachaPoints @"jp.co.ocogamas.bsga.gachapoints"
+
+#define kAlertCustomizeInfoTitle @"設定画面"
+#define kAlertCustomizeInfoMessage @"ゲームを進めると項目が増えます"
+
