@@ -31,7 +31,6 @@
     int animationCount;
 
 }
-@property (nonatomic) BOOL isSee;
 - (void)textFieldAnimationToLeft;
 - (void)textFieldAnimationToRight;
 
