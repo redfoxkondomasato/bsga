@@ -9,11 +9,6 @@
 #import "MemoViewController.h"
 
 @implementation MemoViewController
-@synthesize isSee;
-
-/************************************************
- 破棄
- ************************************************/
 
 /************************************************
  初期化
@@ -45,9 +40,8 @@
     [textField setFont:[UIFont systemFontOfSize:24]];
     [textField setDelegate:self];
     [textField setReturnKeyType:UIReturnKeyDone];
-    if (isSee) {
-        [self performSelectorInBackground:@selector(getData) withObject:nil];
-    }
+
+    [self performSelectorInBackground:@selector(getData) withObject:nil];
 }
 
 /************************************************
@@ -105,8 +99,6 @@
     [layer addAnimation:animation forKey:@"transformAnimationBack"];
 }
 
-
-
 //-----------------------------------------------
 //
 // CAAnimationDelegate
@@ -133,8 +125,8 @@
 /***************************************************************
  * テキストフィールド Return押下
  ***************************************************************/
-- (BOOL)textFieldShouldReturn:(UITextField *)textField_ {
-    PrintLog("");
+- (BOOL)textFieldShouldReturn:(UITextField *)textField_
+{
     [textField endEditing:YES];
     return YES;
 }
@@ -142,31 +134,31 @@
 /***************************************************************
  * テキストフィールド編集完了前
  ***************************************************************/
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField_ {
-    PrintLog("");
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField_
+{
     return YES;
 }
 
 /***************************************************************
  * テキストフィールド編集完了
  ***************************************************************/
-- (void)textFieldDidEndEditing:(UITextField *)textField_ {
-    PrintLog("%d", [[textField_ text] length]);
-    int textLength = [[textField_ text] length];
+- (void)textFieldDidEndEditing:(UITextField *)textField_
+{
+    NSUInteger textLength = [[textField_ text] length];
+
     BOOL bool01 = (textLength > 0 && textLength < 3) || textLength > 60;
-    
     BOOL bool02 = NO;
     NSString *text = [textField_ text];
-    if ([text length] >= 3) {
+    if ([text length] >= 3)
+    {
         NSString *text01 = [text substringWithRange:NSMakeRange(0, 1)];
         NSString *text02 = [text substringWithRange:NSMakeRange(1, 1)];
         NSString *text03 = [text substringWithRange:NSMakeRange(2, 1)];        
-  //      PrintLog(@"%@  %@  %@", text01, text02,  text03);
         bool02 = ([text01 isEqualToString:text02] && [text02 isEqualToString:text03]);
-
     }
     
-    if (bool02) {
+    if (bool02)
+    {
         [[[CustomAlertView alloc] initWithTitle:@"あああとかはダメ"
                                    message:text 
                                   delegate:nil
@@ -174,7 +166,8 @@
                            otherButtonTitles:nil] show];
     }
     
-    if (bool01 || bool02) {
+    if (bool01 || bool02)
+    {
         animationCount = 0;
         [UIView animateWithDuration:0.15f
                          animations:^{
@@ -184,7 +177,9 @@
                              [self textFieldAnimationToLeft];
                          }
          ];
-    } else if (textLength > 0) {
+    }
+    else if (textLength > 0)
+    {
         // 日時
         NSDate *date = [NSDate date];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -279,7 +274,6 @@
            [gameDataEntity payCountPoint],
            [gameDataEntity payCountGacha]
            ];
- //       PrintLog("%@", requestText);
         
         NSURL *url = [NSURL URLWithString:@"http://ocogamas.sitemix.jp/bsga/memo/memo.php"];
         NSData *requestData = [requestText dataUsingEncoding:NSUTF8StringEncoding];
@@ -292,7 +286,6 @@
         [NSURLConnection sendSynchronousRequest:request
                               returningResponse:&response error:&error];
         
-
         if ([response statusCode] == 200) {
             [textField_ setText:@""];
             [self performSelectorInBackground:@selector(getData) withObject:nil];
@@ -303,7 +296,6 @@
                              cancelButtonTitle:@"ahh..."
                                otherButtonTitles:nil] show];
         }
-        
     }
 }
 
@@ -490,7 +482,8 @@
 /************************************************
  メインスレッドで再描画
  ************************************************/
-- (void)reloadTable {
+- (void)reloadTable
+{
     PrintLog();
     [mTableView setHidden:NO];
     [mTableView reloadData];
@@ -499,7 +492,8 @@
 /************************************************
  セルの高さ
  ************************************************/
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return 66.0f;
 }
 

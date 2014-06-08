@@ -439,7 +439,6 @@
     nextPage = nil;
     nextPage = [[MemoViewController alloc] initWithNibName:@"MemoViewController" bundle:nil];
     
-    [(MemoViewController *)nextPage setIsSee:YES];
 //    [self.navigationController pushViewController:nextPage animated:YES];
     
 
@@ -518,7 +517,6 @@
 - (void)memoDebugButtonPushed {
     
     nextPage = [[MemoViewController alloc] initWithNibName:@"MemoViewController" bundle:nil];
-    [(MemoViewController *)nextPage setIsSee:YES];
     [self.navigationController pushViewController:nextPage animated:YES];
     nextPage = nil;
     
