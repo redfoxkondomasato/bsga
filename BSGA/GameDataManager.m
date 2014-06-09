@@ -45,7 +45,9 @@
     NSData *data = [NSData dataWithContentsOfFile:filePath];
   //  PrintLog(@"data = %@", data);
     
-    if (!data) {
+    // 初期データ生成
+    if (!data)
+    {
         GameDataEntity *gameDataEntity;
         gameDataEntity = [[GameDataEntity alloc] init];
         
