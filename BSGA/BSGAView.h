@@ -18,7 +18,7 @@
 #import "GameDataManager.h"
 #import "GameDataEntity.h"
 #import "AnimationManager.h"
-#import "CustomAlertView.h"
+
 enum E_GAME_STATE {
     E_GAME_STATE_LAUNCH_ANIMATION,  // 開始アニメーション
     E_GAME_STATE_MAPPING_ANIMATION, // マップ配置アニメーション

@@ -73,13 +73,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)payEasyMode {
-    if (![SKPaymentQueue canMakePayments]) {
-        [[[CustomAlertView alloc] initWithTitle:@"アプリ内購入制限"
-                                   message:@"設定で機能制限されています"
-                                  delegate:nil
-                         cancelButtonTitle:@"その通りです"
-                           otherButtonTitles:nil] show];
+- (void)payEasyMode
+{
+    if (![SKPaymentQueue canMakePayments])
+    {
+        [[[UIAlertView alloc] initWithTitle:@"アプリ内購入制限"
+                                    message:@"設定で機能制限されています"
+                                   delegate:nil
+                          cancelButtonTitle:@"閉じる"
+                          otherButtonTitles:nil] show];
         return;
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -92,12 +94,14 @@
     
 }
 
-- (void)payGachaPoints {
-    if (![SKPaymentQueue canMakePayments]) {
-        [[[CustomAlertView alloc] initWithTitle:@"アプリ内購入制限"
+- (void)payGachaPoints
+{
+    if (![SKPaymentQueue canMakePayments])
+    {
+        [[[UIAlertView alloc] initWithTitle:@"アプリ内購入制限"
                                      message:@"設定で機能制限されています"
                                     delegate:nil
-                           cancelButtonTitle:@"その通りです"
+                           cancelButtonTitle:@"閉じる"
                            otherButtonTitles:nil] show];
         return;
     }
@@ -112,29 +116,34 @@
 }
 
 
-- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    if (response == nil) {
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+    if (response == nil)
+    {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         return;
     }
     
-    for (NSString *identifier in response.invalidProductIdentifiers) {
+    for (NSString *identifier in response.invalidProductIdentifiers)
+    {
         PrintLog(@"invalid = %@", identifier);
     }
-         
-    for (SKProduct *product in response.products) {
+
+    for (SKProduct *product in response.products)
+    {
         SKPayment *payment = [SKPayment paymentWithProduct:product];
         [[SKPaymentQueue defaultQueue] addPayment:payment];
     }
 }
 
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
 //    PrintLog(@"購入処理中");
-    for (SKPaymentTransaction *transaction in transactions) {
-        if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        if (transaction.transactionState == SKPaymentTransactionStatePurchased)
+        {
 //            PrintLog(@"購入成功 %@", transaction.payment.productIdentifier);
-            
-            
             [delegate paymentDone];
             
             [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
@@ -142,11 +151,15 @@
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
             
-        } else if (transaction.transactionState == SKPaymentTransactionStateRestored) {
+        }
+        else if (transaction.transactionState == SKPaymentTransactionStateRestored)
+        {
             [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        } else if (transaction.transactionState == SKPaymentTransactionStateFailed) {
+        }
+        else if (transaction.transactionState == SKPaymentTransactionStateFailed)
+        {
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         }

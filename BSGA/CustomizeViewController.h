@@ -10,8 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GameDataManager.h"
 #import "AnimationManager.h"
-#import "CustomAlertView.h"
-@interface CustomizeViewController : UIViewController {
+
+@interface CustomizeViewController : UIViewController
+{
     IBOutlet UIButton *backButton;
     IBOutlet UIButton *infoButton;
     
