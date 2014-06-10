@@ -24,11 +24,11 @@
     [archivedData writeToFile:[NSHomeDirectory() stringByAppendingString:@"/Documents/system000"] atomically:YES];// ダミー
     [archivedData writeToFile:[NSHomeDirectory() stringByAppendingString:@"/Documents/system003"] atomically:YES];// ダミー
     if (!isSuccess) {
-        [[[CustomAlertView alloc] initWithTitle:@"データ保存失敗" 
-                                     message:@"端末の容量が足りない場合にデータ保存が失敗する事があります"
-                                    delegate:nil
-                           cancelButtonTitle:@"alright"
-                           otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"データ保存失敗"
+                                    message:@"端末の容量が足りない場合にデータ保存が失敗する事があります"
+                                   delegate:nil
+                          cancelButtonTitle:@"alright"
+                          otherButtonTitles:nil] show];
     }
     return isSuccess;
 }
@@ -45,7 +45,9 @@
     NSData *data = [NSData dataWithContentsOfFile:filePath];
   //  PrintLog(@"data = %@", data);
     
-    if (!data) {
+    // 初期データ生成
+    if (!data)
+    {
         GameDataEntity *gameDataEntity;
         gameDataEntity = [[GameDataEntity alloc] init];
         
@@ -100,11 +102,11 @@
         
         BOOL isSuccess = [GameDataManager saveGameDataEntity:gameDataEntity];
         if (!isSuccess) {
-            [[[CustomAlertView alloc] initWithTitle:@"データ保存失敗" 
-                                       message:@"端末の容量が足りない場合にデータ保存が失敗する事があります"
-                                      delegate:nil
-                             cancelButtonTitle:@"alright"
-                               otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"データ保存失敗"
+                                        message:@"端末の容量が足りない場合にデータ保存が失敗する事があります"
+                                       delegate:nil
+                              cancelButtonTitle:@"alright"
+                              otherButtonTitles:nil] show];
         } else {
   //          PrintLog(@"読み込み成功 length = %d", [data length]);
         }

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomAlertView.h"
 @interface CustomWebViewController : UIViewController<UIWebViewDelegate>
 {
     IBOutlet UIWebView *mWebView;

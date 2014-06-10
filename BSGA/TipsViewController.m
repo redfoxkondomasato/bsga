@@ -401,11 +401,11 @@
     
     
     
-    [[[CustomAlertView alloc] initWithTitle:nil
-                               message:string
-                              delegate:nil
-                     cancelButtonTitle:@"(^o^)"
-                       otherButtonTitles:nil] show];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:string
+                               delegate:nil
+                      cancelButtonTitle:@"(^o^)"
+                      otherButtonTitles:nil] show];
 }
 
 
@@ -514,11 +514,11 @@
         i++;
     }
     
-    [[[CustomAlertView alloc] initWithTitle:nil
-                                 message:string
-                                delegate:nil
-                       cancelButtonTitle:@"(^o^)"
-                       otherButtonTitles:nil] show];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:string
+                               delegate:nil
+                      cancelButtonTitle:@"(^o^)"
+                      otherButtonTitles:nil] show];
 }
 
 
@@ -626,11 +626,11 @@
         i++;
     }
     
-    [[[CustomAlertView alloc] initWithTitle:nil
-                                 message:string
-                                delegate:nil
-                       cancelButtonTitle:@"(^o^)"
-                       otherButtonTitles:nil] show];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:string
+                               delegate:nil
+                      cancelButtonTitle:@"(^o^)"
+                      otherButtonTitles:nil] show];
 }
 
 

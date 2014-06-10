@@ -42,7 +42,7 @@
     if ([gameDataEntity launchCount]==0) {
         [[[UIAlertView alloc] initWithTitle:@"初回起動ボーナス！"
                                    message:@"おまけポイント\n300pointプレゼント！"
-                                  delegate:self
+                                  delegate:nil
                          cancelButtonTitle:@"え、よくわかんない"
                            otherButtonTitles:@"なるほど", @"興味ないな", nil] show];
     }
@@ -120,24 +120,6 @@
     launchCount = 500;
 #endif
     
-    if (launchCount > 30) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        /*
-        [userDefaults setBool:NO forKey:@"reviewme"];
-        [userDefaults synchronize];
-         */
-        if (![userDefaults boolForKey:@"reviewme"]) {
-            [userDefaults setBool:YES forKey:@"reviewme"];
-            [[[CustomAlertView alloc] initWithTitle:@"お楽しみ頂けておりますか？"
-                                           message:@"恐れ入りますが、下の変なアイコンからアプリの評価をして頂けますと大変幸いでございます。\nちなみに起動回数500回で広告消えますです。"
-                                          delegate:nil
-                                 cancelButtonTitle:nil
-                                   otherButtonTitles:nil] show];
-            [userDefaults synchronize];
-        }
-    }
-    
-    
     // 起動回数が10の倍数のとき
     if (launchCount % 10 == 0 && launchCount > 0) {
         
@@ -146,7 +128,7 @@
         [AnimationManager basicAnimationWithView:titleImageView
                                         duration:1.0f
                                            delay:0.2f
-                                         options:UIViewAnimationCurveEaseIn
+                                         options:UIViewAnimationOptionCurveEaseIn
                                      fromToAlpha:CGPointMake(0.6f, 1.0f)
                                     fromToRotate:CGPointZero
                                       beginScale:CGPointMake(scale, scale)
@@ -529,18 +511,8 @@
 /************************************************
  アラートビューのボタン
  ************************************************/
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *title = @"";
-    if (buttonIndex == 0) {
-        title = @"すぐにわかります！";
-    } else if (buttonIndex == 1) {
-        title = @"うん、まあそういうこと";
-    } else if (buttonIndex == 2) {
-        title = @"そのうち興味わいてください";
-    }
-    [[[CustomAlertView alloc] initWithTitle:title message:nil delegate:nil
-                     cancelButtonTitle:@"閉じる"
-                     otherButtonTitles:nil] show];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
 }
 
 //-----------------------------------------------

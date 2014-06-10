@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "GameDataEntity.h"
-#import "CustomAlertView.h"
 
 @interface GameDataManager : NSObject {
     

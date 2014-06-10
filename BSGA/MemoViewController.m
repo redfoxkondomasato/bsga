@@ -159,11 +159,11 @@
     
     if (bool02)
     {
-        [[[CustomAlertView alloc] initWithTitle:@"あああとかはダメ"
-                                   message:text 
-                                  delegate:nil
-                         cancelButtonTitle:@"ごめん"
-                           otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"あああとかはダメ"
+                                    message:text
+                                   delegate:nil
+                          cancelButtonTitle:@"ごめん"
+                          otherButtonTitles:nil] show];
     }
     
     if (bool01 || bool02)
@@ -290,11 +290,11 @@
             [textField_ setText:@""];
             [self performSelectorInBackground:@selector(getData) withObject:nil];
         } else {
-            [[[CustomAlertView alloc] initWithTitle:@"network error"
-                                       message:nil
-                                      delegate:nil
-                             cancelButtonTitle:@"ahh..."
-                               otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"network error"
+                                        message:nil
+                                       delegate:nil
+                              cancelButtonTitle:@"ahh..."
+                              otherButtonTitles:nil] show];
         }
     }
 }

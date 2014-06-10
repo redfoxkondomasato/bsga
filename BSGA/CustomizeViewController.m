@@ -145,9 +145,9 @@
 /************************************************
  インフォボタン
  ************************************************/
-- (void)infoButtonPushed {
-    
-    [[[CustomAlertView alloc] initWithTitle:kAlertCustomizeInfoTitle
+- (void)infoButtonPushed
+{
+    [[[UIAlertView alloc] initWithTitle:kAlertCustomizeInfoTitle
                                message:kAlertCustomizeInfoMessage
                               delegate:nil
                      cancelButtonTitle:nil
@@ -156,7 +156,7 @@
     [AnimationManager basicAnimationWithView:infoButton
                                     duration:1.0f
                                        delay:0.0f
-                                     options:UIViewAnimationCurveEaseOut
+                                     options:UIViewAnimationOptionCurveEaseInOut
                                  fromToAlpha:CGPointMake(1.0f, 0.0f)
                                 fromToRotate:CGPointZero
                                   beginScale:CGPointMake(1.0f, 1.0f)
@@ -168,7 +168,8 @@
 /************************************************
  コントローラモードSegmentedControl
  ************************************************/
-- (void)controllerModeSegmentedControlValueChanged:(UISegmentedControl *)segmentedControl {
+- (void)controllerModeSegmentedControlValueChanged:(UISegmentedControl *)segmentedControl
+{
     [gameDataEntity setCustomizeControllerMode:[segmentedControl selectedSegmentIndex]];
 
     if ([segmentedControl selectedSegmentIndex] == 0) {

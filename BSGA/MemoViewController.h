@@ -13,8 +13,6 @@
 #import "GameDataEntity.h"
 #import "Misc.h"
 #import "AnimationManager.h"
-#import "CustomAlertView.h"
-
 
 @interface MemoViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     IBOutlet UIButton *backButton;

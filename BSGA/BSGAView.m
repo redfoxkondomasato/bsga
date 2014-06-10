@@ -1187,11 +1187,11 @@
                 // 保存
                 if (![GameDataManager saveGameDataEntity:gameDataEntity]) {
                     // 保存に失敗した時
-                    [[[CustomAlertView alloc] initWithTitle:@"保存失敗"
-                                               message:@"容量不足などが原因でござる"
-                                              delegate:nil
-                                     cancelButtonTitle:@"理解した"
-                                       otherButtonTitles:nil] show];
+                    [[[UIAlertView alloc] initWithTitle:@"保存失敗"
+                                                message:@"容量不足などが原因でござる"
+                                               delegate:nil
+                                      cancelButtonTitle:@"とじる"
+                                      otherButtonTitles:nil] show];
 
                 }
             }
