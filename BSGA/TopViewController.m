@@ -33,57 +33,26 @@
     
     PrintLog();
     
-
-//    PrintLog(@"viewDidLoad");
-    
     GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
-    
-    // 初回起動
-    if ([gameDataEntity launchCount]==0) {
-        [[[UIAlertView alloc] initWithTitle:@"初回起動ボーナス！"
-                                   message:@"おまけポイント\n300pointプレゼント！"
-                                  delegate:nil
-                         cancelButtonTitle:@"え、よくわかんない"
-                           otherButtonTitles:@"なるほど", @"興味ないな", nil] show];
-    }
     
     [gameDataEntity setLaunchCount:[gameDataEntity launchCount]+1];// 起動回数カウントアップ
     [GameDataManager saveGameDataEntity:gameDataEntity];
     
     [self performSelectorInBackground:@selector(sendData) withObject:nil];
     
-    [launchCountLabel setText:[NSString stringWithFormat:@"%d", [gameDataEntity launchCount]]];
-    
+    [launchCountLabel setText:[NSString stringWithFormat:@"起動回数　%d", [gameDataEntity launchCount]]];
     
     srand(time(NULL));
     
     BSGAAppDelegate *appDelegate = (BSGAAppDelegate *)[[UIApplication sharedApplication] delegate];
     soundManager = appDelegate.soundManager;
 
-    [scrollView addSubview:contentView];
-    [scrollView setContentSize:CGSizeMake([contentView frame].size.width, 
-                                          [contentView frame].size.height)];
-    
-    [startButton addTarget:self
-                    action:@selector(startButtonPushed)
-          forControlEvents:UIControlEventTouchUpInside];
-    [startButton setExclusiveTouch:YES];
-    
-    [abilityButton addTarget:self
-                      action:@selector(abilityButtonPushed)
-            forControlEvents:UIControlEventTouchUpInside];
-    [abilityButton setExclusiveTouch:YES];
- 
-    
-    [customizeButton addTarget:self
-                        action:@selector(customizeButtonPushed)
-              forControlEvents:UIControlEventTouchUpInside];
-    [customizeButton setExclusiveTouch:YES];
+    [contentView setBackgroundColor:[UIColor blueColor]];
 
-    
-    [tipsButton addTarget:self 
-                   action:@selector(tipsButtonPushed)
-         forControlEvents:UIControlEventTouchUpInside];
+    [startButton     setExclusiveTouch:YES];
+    [abilityButton   setExclusiveTouch:YES];
+    [customizeButton setExclusiveTouch:YES];
+    [tipsButton      setExclusiveTouch:YES];
     
     [memoButton addTarget:self
                    action:@selector(memoButtonPushed)
@@ -95,7 +64,7 @@
                    action:@selector(bsgaButtonPushed)
          forControlEvents:UIControlEventTouchUpInside];
     [bsgaButton setExclusiveTouch:YES];
-    
+
     [blogButton addTarget:self
                    action:@selector(blogButtonPushed)
          forControlEvents:UIControlEventTouchUpInside];
@@ -103,7 +72,6 @@
     [appstoreButton addTarget:self
                        action:@selector(appstoreButtonPushed)
              forControlEvents:UIControlEventTouchUpInside];
-
     
     int launchCount = [gameDataEntity launchCount];
     
@@ -141,31 +109,36 @@
 /************************************************
  ビュー非表示前
  ************************************************/
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
-
 }
 
 /************************************************
  ビュー表示前
  ************************************************/
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
-    if ([gameDataEntity getStageClearStatusWithLevel:E_STAGE_LEVEL_SHOKYU stage:3] == -2) {
+    // TODO -2ってなんだよw
+    if ([gameDataEntity getStageClearStatusWithLevel:E_STAGE_LEVEL_SHOKYU stage:3] == -2)
+    {
         [customizeButton setHidden:YES];
-    } else {
+    } else
+    {
         [customizeButton setHidden:NO];
     }
-    if ([gameDataEntity getStageClearStatusWithLevel:E_STAGE_LEVEL_SHOKYU stage:19] == -2) {
+
+    // TODO -2ってなんだよw
+    if ([gameDataEntity getStageClearStatusWithLevel:E_STAGE_LEVEL_SHOKYU stage:19] == -2)
+    {
         [memoButton setHidden:YES];
-    } else {
+    } else
+    {
         [memoButton setHidden:NO];
     }
-    
-    
-
     
     if (transitionType == E_TRANSITION_TYPE_FLIP) {
         CATransform3D transformFromFlip = CATransform3DMakeRotation(M_PI/2.0f, -1.0f, 1.0f, 0.0f);
@@ -265,7 +238,8 @@
 /************************************************
  開始ボタン
  ************************************************/
-- (void)startButtonPushed {
+- (IBAction)startButtonTouchDown:(id)sender
+{
     transitionType = E_TRANSITION_TYPE_ALPHA;
     [soundManager play:E_SOUND_SELECT];
         
@@ -273,7 +247,6 @@
     nextPage = nil;    
     
     nextPage = [[StageSelectViewController alloc] initWithNibName:@"StageSelectViewController" bundle:nil];
-    
     
     CALayer *layer = self.view.layer;
     
@@ -303,15 +276,14 @@
 /************************************************
  能力ボタン
  ************************************************/
-- (void)abilityButtonPushed {
-//    PrintLog(@"押下");
+- (IBAction)abilityButtonTouchDown:(id)sender
+{
     [soundManager play:E_SOUND_SELECT];
     transitionType = E_TRANSITION_TYPE_FLIP;
     nextPage = nil;
     nextPage = [[AbilityViewController alloc] initWithNibName:@"AbilityViewController" bundle:nil];
     
     CALayer *layer = self.view.layer;
-
     CATransform3D transformFlip = CATransform3DMakeRotation(M_PI/2.0f, 1.0f, -1.0f, 0.0f);
     transformFlip = CATransform3DScale(transformFlip, kFlipAnimationScale, kFlipAnimationScale, 1.0f);
 
@@ -337,9 +309,9 @@
 /************************************************
  設定ボタン
  ************************************************/
-- (void)customizeButtonPushed {
+- (IBAction)customizeButtonTouchDown:(id)sender
+{
     [soundManager play:E_SOUND_SELECT];
-//    PrintLog(@"押下");
     
     nextPage = nil;
     nextPage = [[CustomizeViewController alloc] initWithNibName:@"CustomizeViewController" bundle:nil];
@@ -374,10 +346,10 @@
 /************************************************
  TIPSボタン
  ************************************************/
-- (void)tipsButtonPushed { 
+- (IBAction)tipsButtonTouchDown:(id)sender
+{
     [soundManager play:E_SOUND_SELECT];
     
- //   PrintLog(@"押下");
     nextPage = nil;
     nextPage = [[TipsViewController alloc] initWithNibName:@"TipsViewController" bundle:nil];
 
@@ -413,17 +385,13 @@
 /************************************************
  MEMOボタン
  ************************************************/
-- (void)memoButtonPushed {
-  //  PrintLog(@"押下");
-
+- (void)memoButtonPushed
+{
     [soundManager play:E_SOUND_SELECT];
     
     nextPage = nil;
     nextPage = [[MemoViewController alloc] initWithNibName:@"MemoViewController" bundle:nil];
     
-//    [self.navigationController pushViewController:nextPage animated:YES];
-    
-
     transitionType = E_TRANSITION_TYPE_FLIP_XZ;
     
     CALayer *layer = self.view.layer;
@@ -448,21 +416,16 @@
     [animation setToValue:[NSValue valueWithCATransform3D:transformFlip]];
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];    
     [layer addAnimation:animation forKey:@"transformAnimationNext"];
-    
-
 }
-
 
 /************************************************
  BSGAボタン（販促）
  ************************************************/
-- (void)bsgaButtonPushed {
-    
+- (void)bsgaButtonPushed
+{
     NSURL *url = [NSURL URLWithString:@"http://ocogamas.blog.fc2.com/blog-entry-1.html"];
     [[UIApplication sharedApplication] openURL:url];
 }
-
-
 
 /************************************************
  logボタン
@@ -496,30 +459,15 @@
 /************************************************
  メモDEBUGボタン
  ************************************************/
-- (void)memoDebugButtonPushed {
-    
+- (void)memoDebugButtonPushed
+{
     nextPage = [[MemoViewController alloc] initWithNibName:@"MemoViewController" bundle:nil];
     [self.navigationController pushViewController:nextPage animated:YES];
     nextPage = nil;
     
 }
-//-----------------------------------------------
-//
-// UIAlertViewDelegate
-//
-//-----------------------------------------------
-/************************************************
- アラートビューのボタン
- ************************************************/
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-}
 
-//-----------------------------------------------
-//
-// CAAnimationDelegate
-//
-//-----------------------------------------------
+#pragma mark - CAAnimationDelegate
 /************************************************
  CAAnimation停止
  ************************************************/
@@ -538,15 +486,12 @@
     }
 }
 
-//-----------------------------------------------
-//
-// スレッド
-//
-//-----------------------------------------------
+#pragma mark - thread
 /************************************************
  データ送信
  ************************************************/
-- (void)sendData {
+- (void)sendData
+{
     [SendDataManager sendData];
 }
 @end
