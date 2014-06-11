@@ -12,6 +12,8 @@
                 <outlet property="customizeButton" destination="27" id="43"/>
                 <outlet property="launchCountLabel" destination="50" id="51"/>
                 <outlet property="startButton" destination="29" id="32"/>
+                <outlet property="tableView" destination="x2n-9M-yUN" id="jWf-f1-B5y"/>
+                <outlet property="textField" destination="MN1-xz-tgY" id="OQT-0u-8ql"/>
                 <outlet property="tipsButton" destination="26" id="44"/>
                 <outlet property="titleImageView" destination="24" id="60"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -102,13 +104,20 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="MN1-xz-tgY">
                             <rect key="frame" x="7" y="248" width="209" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="UpQ-g9-pW6"/>
+                            </connections>
                         </textField>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="x2n-9M-yUN">
                             <rect key="frame" x="0.0" y="286" width="320" height="174"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="wba-Hc-UZM"/>
+                                <outlet property="delegate" destination="-1" id="XPF-w2-Sky"/>
+                            </connections>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

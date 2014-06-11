@@ -21,9 +21,6 @@
     
     IBOutlet UITextField *textField;
     
-    
-    NSMutableData *mutableData;
-    NSMutableArray *rowMutableArray;
     NSMutableArray *cellDataArray;
     
     int animationCount;

@@ -445,9 +445,8 @@
  ・表示
  ************************************************/
 - (void)getData {
-//    PrintLog();
     
-    mutableData = [[NSMutableData alloc] init];
+    NSMutableData *mutableData = [[NSMutableData alloc] init];
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     NSURLRequest *request;
