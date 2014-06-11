@@ -95,7 +95,7 @@
 
     [UIView animateWithDuration:1.0f
                           delay:0.5f
-                        options:UIViewAnimationCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          [stopButton setAlpha:0.0f];
                          [leftButton setAlpha:0.0f];

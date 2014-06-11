@@ -47,8 +47,6 @@
     BSGAAppDelegate *appDelegate = (BSGAAppDelegate *)[[UIApplication sharedApplication] delegate];
     soundManager = appDelegate.soundManager;
 
-    [contentView setBackgroundColor:[UIColor blueColor]];
-
     [startButton     setExclusiveTouch:YES];
     [abilityButton   setExclusiveTouch:YES];
     [customizeButton setExclusiveTouch:YES];
