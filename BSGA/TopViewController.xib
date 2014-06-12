@@ -14,6 +14,7 @@
                 <outlet property="startButton" destination="29" id="32"/>
                 <outlet property="tableView" destination="x2n-9M-yUN" id="jWf-f1-B5y"/>
                 <outlet property="textField" destination="MN1-xz-tgY" id="OQT-0u-8ql"/>
+                <outlet property="timerLabel" destination="4I3-pF-6BA" id="7Dp-cq-qFT"/>
                 <outlet property="tipsButton" destination="26" id="44"/>
                 <outlet property="titleImageView" destination="24" id="60"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -68,18 +69,6 @@
                                 <action selector="tipsButtonTouchDown:" destination="-1" eventType="touchDown" id="GPr-Wd-g98"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WkV-Bs-Sol">
-                            <rect key="frame" x="224" y="243" width="92" height="40"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                            <state key="normal" title="送信" backgroundImage="button_standard.png">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="tipsButtonTouchDown:" destination="-1" eventType="touchDown" id="9tw-d5-b7e"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="27">
                             <rect key="frame" x="30" y="186" width="120" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -102,7 +91,7 @@
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="MN1-xz-tgY">
-                            <rect key="frame" x="7" y="248" width="209" height="30"/>
+                            <rect key="frame" x="7" y="248" width="222" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -119,6 +108,13 @@
                                 <outlet property="delegate" destination="-1" id="XPF-w2-Sky"/>
                             </connections>
                         </tableView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4I3-pF-6BA">
+                            <rect key="frame" x="244" y="248" width="72" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>

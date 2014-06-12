@@ -10,15 +10,18 @@
 
 static int kGetMemoDataCountDown = 10;
 
-@interface TopViewController()<UITableViewDelegate, UITableViewDataSource>
+@interface TopViewController()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
     NSMutableArray *_memoDataArray;
     NSTimer *_timer;
     int _getMemoDataCountDown;
+    
+    BOOL _isDownloading;
 
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 
 @end
 
@@ -35,6 +38,7 @@ static int kGetMemoDataCountDown = 10;
     {
         _memoDataArray = [[NSMutableArray alloc] init];
         _getMemoDataCountDown = 0;
+        _isDownloading   = NO;
     }
     return self;
 }
@@ -45,7 +49,9 @@ static int kGetMemoDataCountDown = 10;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    [self.timerLabel setText:@""];
+
     GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
     
     [gameDataEntity setLaunchCount:[gameDataEntity launchCount]+1];// 起動回数カウントアップ
@@ -368,6 +374,12 @@ static int kGetMemoDataCountDown = 10;
     [layer addAnimation:animation forKey:@"transformAnimationNext"];
 }
 
+
+- (IBAction)updateButtonPushed:(id)sender
+{
+    _getMemoDataCountDown = 0;
+}
+
 #pragma mark - CAAnimationDelegate
 
 /************************************************
@@ -464,13 +476,7 @@ static int kGetMemoDataCountDown = 10;
                                   duration:0.3f
                                      delay:0.9f
                                      alpha:0.0f];
-    
-    
-    [AnimationManager popAnimationWithView:cell.commentLabel
-                                  duration:0.5f
-                                     delay:0.2f
-                                     alpha:0.7f];
-    
+
     return cell;
 }
 
@@ -486,17 +492,30 @@ static int kGetMemoDataCountDown = 10;
  ************************************************/
 - (void)getMemoDataTick
 {
-    PrintLog(@"count down = %d", _getMemoDataCountDown);
-    if (_getMemoDataCountDown > 0)
+    CGPoint tableOffset = [self.tableView contentOffset];
+
+    if (_isDownloading)
     {
-        _getMemoDataCountDown--;
+        [self.timerLabel setText:@"..."];
     }
-    
-    if (_getMemoDataCountDown <= 0)
+    else if (tableOffset.y == 0)
     {
-        _getMemoDataCountDown = kGetMemoDataCountDown;
+        if (_getMemoDataCountDown > 0)
+        {
+            _getMemoDataCountDown--;
+            [self.timerLabel setText:[NSString stringWithFormat:@"%d", _getMemoDataCountDown]];
+        }
         
-        [self performSelectorInBackground:@selector(getMemoData) withObject:nil];
+        if (_getMemoDataCountDown <= 0)
+        {
+            _getMemoDataCountDown = kGetMemoDataCountDown;
+            
+            [self performSelectorInBackground:@selector(getMemoData) withObject:nil];
+        }
+    }
+    else
+    {
+        [self.timerLabel setText:@"(-_-)"];
     }
     
 }
@@ -508,6 +527,7 @@ static int kGetMemoDataCountDown = 10;
  ************************************************/
 - (void)getMemoData
 {
+    _isDownloading = YES;
     PrintLog(@"MEMOデータ取得開始");
     
     NSMutableData *mutableData = [[NSMutableData alloc] init];
@@ -520,9 +540,8 @@ static int kGetMemoDataCountDown = 10;
     NSError *error = nil;
     [mutableData appendData:[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]];
     
-    if ([response statusCode] == 200) {
-        //      PrintLog(@"通信成功");
-        
+    if ([response statusCode] == 200)
+    {
         NSString *string = [[NSString alloc] initWithData:mutableData encoding:NSUTF8StringEncoding];
         // 改行で分割
         NSMutableArray *rowArray = [[NSMutableArray alloc] initWithArray:[string componentsSeparatedByString:@"\n"]];
@@ -539,10 +558,225 @@ static int kGetMemoDataCountDown = 10;
         }
         
         [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:NO];
+        
+        [self performSelectorOnMainThread:@selector(setSuccessButtonText) withObject:nil waitUntilDone:YES];
+    }
+    else
+    {
+        [self performSelectorOnMainThread:@selector(setFailedButtonText) withObject:nil waitUntilDone:YES];
     }
     
+    _isDownloading = NO;
+}
+- (void)setSuccessButtonText
+{
+    [self.timerLabel setText:@"ok"];
+
+}
+- (void)setFailedButtonText
+{
+    [self.timerLabel setText:@"(x_x)"];
 }
 
+//-----------------------------------------------
+//
+// TextViewDelegate
+//
+//-----------------------------------------------
+
+/***************************************************************
+ * テキストフィールド 編集開始
+ ***************************************************************/
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                         CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, -60.0f);
+                         [contentView setTransform:transform];
+                     }];
+    return YES;
+}
+
+/***************************************************************
+ * テキストフィールド Return押下
+ ***************************************************************/
+- (BOOL)textFieldShouldReturn:(UITextField *)textField_
+{
+    PrintLog(@"");
+    [self.textField endEditing:YES];
+    return YES;
+}
+
+/***************************************************************
+ * テキストフィールド編集完了前
+ ***************************************************************/
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField_
+{
+    PrintLog(@"");
+    return YES;
+}
+
+/***************************************************************
+ * テキストフィールド編集完了
+ ***************************************************************/
+- (void)textFieldDidEndEditing:(UITextField *)textField_
+{
+    PrintLog(@"");
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                         CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, 0.0f);
+                         [contentView setTransform:transform];
+                     }];
+    NSUInteger textLength = [[textField_ text] length];
+    
+    BOOL bool01 = (textLength > 0 && textLength < 3) || textLength > 60;
+    BOOL bool02 = NO;
+    NSString *text = [textField_ text];
+    if ([text length] >= 3)
+    {
+        NSString *text01 = [text substringWithRange:NSMakeRange(0, 1)];
+        NSString *text02 = [text substringWithRange:NSMakeRange(1, 1)];
+        NSString *text03 = [text substringWithRange:NSMakeRange(2, 1)];
+        bool02 = ([text01 isEqualToString:text02] && [text02 isEqualToString:text03]);
+    }
+    
+    if (bool02)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"あああとかはダメ"
+                                    message:text
+                                   delegate:nil
+                          cancelButtonTitle:@"ごめん"
+                          otherButtonTitles:nil] show];
+    }
+    else if (bool01)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"雑なのはダメ"
+                                    message:text
+                                   delegate:nil
+                          cancelButtonTitle:@"ごめん"
+                          otherButtonTitles:nil] show];
+    }
+    else
+    {
+        // 日時
+        NSDate *date = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+        NSString *dateString = [dateFormatter stringFromDate:date];
+        
+        // 言語（国）
+        NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        
+        // デバイス名
+        NSString *device = [[UIDevice currentDevice] model];
+        NSString *deviceName = [[UIDevice currentDevice] name];
+        
+        // コメント
+        NSMutableString *comment
+        = [[NSMutableString alloc] initWithString:[[textField_ text]
+                                                   stringByReplacingOccurrencesOfString:@","
+                                                   withString:@" "]];
+        
+        GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
+        int shokyu = 0;
+        int chukyu = 0;
+        int jokyu = 0;
+        int chokyu = 0;
+        for (int i=0; i<180; i++) {
+            if ([gameDataEntity getStageClearStatusWithLevel:0 stage:i] > -2) {
+                shokyu = i+1;
+            }
+            if ([gameDataEntity getStageClearStatusWithLevel:1 stage:i] > -2) {
+                chukyu = i+1;
+            }
+            if ([gameDataEntity getStageClearStatusWithLevel:2 stage:i] > -2) {
+                jokyu = i+1;
+            }
+            if (i<10) {
+                if ([gameDataEntity getStageClearStatusWithLevel:3 stage:i] > -2) {
+                    chokyu = i+1;
+                }
+            }
+        }
+        
+        int gacha01rate = 0;
+        int gacha02rate = 0;
+        int gacha03rate = 0;
+        for (int i=0; i<20; i++) {
+            gacha01rate += [gameDataEntity getGacha01Normal:i];
+        }
+        for (int i=0; i<6; i++) {
+            gacha01rate += [gameDataEntity getGacha01Rare:i];
+        }
+        for (int i=0; i<2; i++) {
+            gacha01rate += [gameDataEntity getGacha01SuperRare:i];
+        }
+        for (int i=0; i<30; i++) {
+            gacha02rate += [gameDataEntity getGacha02Normal:i];
+        }
+        for (int i=0; i<20; i++) {
+            gacha02rate += [gameDataEntity getGacha02Rare:i];
+        }
+        for (int i=0; i<10; i++) {
+            gacha02rate += [gameDataEntity getGacha02SuperRare:i];
+        }
+        for (int i=0; i<12; i++) {
+            gacha03rate += [gameDataEntity getGacha03Normal:i];
+        }
+        for (int i=0; i<10; i++) {
+            gacha03rate += [gameDataEntity getGacha03Rare:i];
+        }
+        for (int i=0; i<14; i++) {
+            gacha03rate += [gameDataEntity getGacha03SuperRare:i];
+        }
+        
+        gacha01rate *= 100;
+        gacha02rate *= 100;
+        gacha03rate *= 100;
+        gacha01rate /= 28;
+        gacha02rate /= 60;
+        gacha03rate /= 36;
+        
+        
+        NSString *requestText
+        = [NSString stringWithFormat:@"%@,%d,%@,%@,%3d,%3d,%3d,%2d,%3d,%3d,%3d,%5d,%@,%@,%d,%d",
+           dateString,
+           [gameDataEntity launchCount],
+           language,
+           device,
+           shokyu, chukyu, jokyu, chokyu,
+           gacha01rate, gacha02rate, gacha03rate,
+           [gameDataEntity score],
+           deviceName,
+           comment,
+           [gameDataEntity payCountPoint],
+           [gameDataEntity payCountGacha]
+           ];
+        
+        NSURL *url = [NSURL URLWithString:@"http://ocogamas.sitemix.jp/bsga/memo/memo.php"];
+        NSData *requestData = [requestText dataUsingEncoding:NSUTF8StringEncoding];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-type"];
+        [request setHTTPBody:requestData];
+        NSHTTPURLResponse *response = nil;
+        NSError *error = nil;
+        [NSURLConnection sendSynchronousRequest:request
+                              returningResponse:&response error:&error];
+        
+        if ([response statusCode] == 200) {
+            [textField_ setText:@""];
+            [self performSelectorInBackground:@selector(getMemoData) withObject:nil];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"network error"
+                                        message:nil
+                                       delegate:nil
+                              cancelButtonTitle:@"ahh..."
+                              otherButtonTitles:nil] show];
+        }
+    }
+}
+         
 /************************************************
  データ送信
  ************************************************/
