@@ -114,6 +114,8 @@ static int kGetMemoDataCountDown = 10;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+ 
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     if ([_timer isValid] == NO)
     {
@@ -123,16 +125,6 @@ static int kGetMemoDataCountDown = 10;
                                        userInfo:nil
                                         repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    }
-    
-    GameDataEntity *gameDataEntity = [GameDataManager getGameDataEntity];
-    // TODO -2ってなんだよw
-    if ([gameDataEntity getStageClearStatusWithLevel:E_STAGE_LEVEL_SHOKYU stage:3] == -2)
-    {
-        [customizeButton setHidden:YES];
-    } else
-    {
-        [customizeButton setHidden:NO];
     }
     
     if (transitionType == E_TRANSITION_TYPE_FLIP) {

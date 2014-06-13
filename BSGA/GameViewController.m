@@ -308,7 +308,6 @@
                                     delegate:self 
                            cancelButtonTitle:@"MENU"
                            otherButtonTitles:@"RESUME", nil] show];
-//        [directionKeyView setKeyAlpha:0];
         [directionKeyView resetTouch];
         [directionKeyView setNeedsDisplay];
     } 

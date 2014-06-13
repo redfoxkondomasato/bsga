@@ -11,9 +11,6 @@
 
 @implementation StageSelectViewController
 @synthesize gameDataEntity;
-/************************************************
- 破棄
- ************************************************/
 
 /************************************************
  初期化
@@ -34,8 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-  //  PrintLog(@"level:%d stage:%d", selectedLevel, selectedStage);
+    PrintLog(@"");
     [displayLevelLabel setText:@""];
     [displayRankLabel setText:@""];
     [displayMessageLabel setText:@""];
@@ -105,14 +101,20 @@
 /************************************************
  ビュー表示後
  ************************************************/
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    PrintLog(@"");
 }
 
 /************************************************
  ビュー表示前
  ************************************************/
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
+    PrintLog(@"");
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     CATransform3D transformFromFlip = CATransform3DMakeRotation(M_PI/2.0f, -1.0f, 1.0f, 0.0f);
     transformFromFlip = CATransform3DScale(transformFromFlip, kFlipAnimationScale, kFlipAnimationScale, 1.0f);
@@ -140,7 +142,8 @@
 /************************************************
  ボタンのセットアップ
  ************************************************/
-- (void)setupButtonWithButton:(UIButton *)button index:(int)i maxStage:(int)maxStage level:(int)level {
+- (void)setupButtonWithButton:(UIButton *)button index:(int)i maxStage:(int)maxStage level:(int)level
+{
     [button setFrame:CGRectMake(36+70*(maxStage - i - 1), 18, 44, 44)];
     [button setBackgroundImage:[UIImage imageNamed:@"round_button"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"round_button_pushed"] forState:UIControlStateHighlighted];
@@ -173,8 +176,6 @@
     [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
     [[button titleLabel] setShadowOffset:CGSizeMake(0.0f, -1.0f)];
     
-//    [button setReversesTitleShadowWhenHighlighted:YES];
-    
     [button setTag:i];
     [button setAlpha:0.0f];
 }
@@ -182,7 +183,8 @@
 /************************************************
  ステージインフォ
  ************************************************/
-- (void)setupStageInfoWithIndex:(int)i maxStage:(int)maxStage level:(int)level scrollView:(UIScrollView *)aScrollView {
+- (void)setupStageInfoWithIndex:(int)i maxStage:(int)maxStage level:(int)level scrollView:(UIScrollView *)aScrollView
+{
     int stage = i+1;
     UILabel *hardLabel = [[UILabel alloc] init];
     [hardLabel setFrame:CGRectMake(36+70*(maxStage - i - 1), 0, 44, 22)];
@@ -222,8 +224,10 @@
 /************************************************
  スクロールビューのセットアップ
  ************************************************/
-- (void)setupScrollViewWithScrollView:(UIScrollView *)aScrollView maxStage:(int)maxStage {
-        
+- (void)setupScrollViewWithScrollView:(UIScrollView *)aScrollView maxStage:(int)maxStage
+{
+    PrintLog(@"");
+
     int i=0;
     
     SEL selector = nil;
@@ -278,8 +282,9 @@
 /************************************************
  ビューのセットアップ
  ************************************************/
-- (void)setup {
-    PrintLog();
+- (void)setup
+{
+    PrintLog(@"");
     
     [shokyuScrollView setTag:E_STAGE_LEVEL_SHOKYU];
     [chukyuScrollView setTag:E_STAGE_LEVEL_CHUKYU];
@@ -318,8 +323,8 @@
 /************************************************
  戻るボタン
  ************************************************/
-- (void)backButtonPushed {
-    
+- (void)backButtonPushed
+{
     CALayer *layer = self.view.layer;
     
     CATransform3D transformFlip = CATransform3DMakeRotation(M_PI/2.0f, 1.0f, -1.0f, 0.0f);
@@ -348,8 +353,8 @@
 /************************************************
  ゲーム開始
  ************************************************/
-- (void)startGame:(NSArray *)array {
-    
+- (void)startGame:(NSArray *)array
+{
     int stage = [[array objectAtIndex:0] intValue];
     int level = [[array objectAtIndex:1] intValue];
     
@@ -723,7 +728,8 @@
 /************************************************
  左スクロールボタン
  ************************************************/
-- (void)scrollLeftButtonPushed {
+- (void)scrollLeftButtonPushed
+{
 #if DEBUG_MODE
     [gameDataEntity setStageClearStatusWithLevel:selectedLevel stage:selectedStage value:1];
     [gameDataEntity setStageClearStatusWithLevel:selectedLevel stage:selectedStage+1 value:-1];
@@ -757,16 +763,30 @@
 /************************************************
  CAAnimation停止
  ************************************************/
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    PrintLog(@"flag = %d", flag);
+
     CALayer *layer = self.view.layer;
     
-    if (anim == [self.view.layer animationForKey:@"transformAnimationBack"]) {
+    if (anim == [self.view.layer animationForKey:@"transformAnimationBack"])
+    {
+        PrintLog(@"animationBack");
         [self.navigationController popViewControllerAnimated:NO];        
         [layer removeAnimationForKey:@"transformAnimationBack"];
-    } else if (anim == [layer animationForKey:@"transformAnimationAppear"]) {
+    }
+    else if (anim == [layer animationForKey:@"transformAnimationAppear"])
+    {
+        PrintLog(@"animationAppear");
         [layer removeAnimationForKey:@"transformAnimationAppear"];
-    } else if (anim == [layer animationForKey:@"transformAnimationNext"]) {
-        if (nextPage) {
+    }
+    else if (anim == [layer animationForKey:@"transformAnimationNext"])
+    {
+        PrintLog(@"animationNext");
+        if (nextPage)
+        {
+            PrintLog(@"animationNext OK");
+
             [self.navigationController pushViewController:nextPage animated:NO];
             nextPage = nil;
         }

@@ -150,7 +150,7 @@
     [[[UIAlertView alloc] initWithTitle:kAlertCustomizeInfoTitle
                                message:kAlertCustomizeInfoMessage
                               delegate:nil
-                     cancelButtonTitle:nil
+                     cancelButtonTitle:@"x"
                        otherButtonTitles:nil] show];
     
     [AnimationManager basicAnimationWithView:infoButton
