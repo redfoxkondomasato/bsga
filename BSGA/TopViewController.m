@@ -434,9 +434,7 @@ static int kGetMemoDataCountDown = 10;
     
     
     NSArray *array = [NSArray arrayWithArray:[_memoDataArray objectAtIndex:indexPath.row]];
-    
-    [cell.numberLabel setText:[Misc getClassWithScore:[[array objectAtIndex:11] intValue]]];
-    
+        
     [cell.dateLabel setText:[array objectAtIndex:0]];
     [cell.launchCountLabel setText:[array objectAtIndex:1]];
     [cell.countryLabel setText:[array objectAtIndex:2]];
@@ -591,7 +589,7 @@ static int kGetMemoDataCountDown = 10;
 {
     [UIView animateWithDuration:0.2f
                      animations:^{
-                         CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, -60.0f);
+                         CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, -120.0f);
                          [contentView setTransform:transform];
                      }];
     return YES;
@@ -656,7 +654,7 @@ static int kGetMemoDataCountDown = 10;
                           cancelButtonTitle:@"ごめん"
                           otherButtonTitles:nil] show];
     }
-    else
+    else if (textLength > 0)
     {
         // 日時
         NSDate *date = [NSDate date];
@@ -776,6 +774,7 @@ static int kGetMemoDataCountDown = 10;
         }
     }
 }
+
          
 /************************************************
  データ送信

@@ -20,7 +20,6 @@
 
 + (NSString *)getRankWithStage:(int)stage value:(int)value;
 
-+ (NSString *)getClassWithScore:(int)score;
 
 @end
 
