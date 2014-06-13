@@ -97,8 +97,6 @@
     [gameDataEntity setScore:100*rankS + 81*rankA + 64*rankB + 49*rankC + 36*rankD + 25*rankE + 16*rankF + 9*rankG];
     [GameDataManager saveGameDataEntity:gameDataEntity];
     
-    [classLabel setText:[Misc getClassWithScore:[gameDataEntity score]]];
-    
     [scrollLeftButton addTarget:self action:@selector(scrollLeftButtonPushed) forControlEvents:UIControlEventTouchUpInside];
     [scrollRightButton addTarget:self action:@selector(scrollRightButtonPushed) forControlEvents:UIControlEventTouchUpInside];
     
@@ -190,7 +188,7 @@
     [hardLabel setFrame:CGRectMake(36+70*(maxStage - i - 1), 0, 44, 22)];
     [hardLabel setFont:[UIFont systemFontOfSize:10]];
     [hardLabel setTextColor:[UIColor redColor]];
-    [hardLabel setTextAlignment:UITextAlignmentCenter];
+    [hardLabel setTextAlignment:NSTextAlignmentCenter];
     [hardLabel setBackgroundColor:[UIColor clearColor]];
     [hardLabel setText:@"難関"];
     if (level == E_STAGE_LEVEL_SHOKYU) {

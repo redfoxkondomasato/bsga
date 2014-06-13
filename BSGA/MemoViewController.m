@@ -378,8 +378,6 @@
     
     
     NSArray *array = [NSArray arrayWithArray:[cellDataArray objectAtIndex:indexPath.row]];
-
-    [cell.numberLabel setText:[Misc getClassWithScore:[[array objectAtIndex:11] intValue]]];
     
     [cell.dateLabel setText:[array objectAtIndex:0]];
     [cell.launchCountLabel setText:[array objectAtIndex:1]];

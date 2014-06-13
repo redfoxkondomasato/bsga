@@ -22,8 +22,6 @@
     
     IBOutlet UIView *contentView;
     
-    IBOutlet UILabel *classLabel;
-    
     IBOutlet UIScrollView *shokyuScrollView;
     IBOutlet UIScrollView *chukyuScrollView;
     IBOutlet UIScrollView *jokyuScrollView;
