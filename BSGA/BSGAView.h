@@ -129,4 +129,10 @@ typedef struct colorStruct {
 - (void)playSound:(int)sound;
 
 - (void)drawHP:(int)hp x:(float)x y:(float)y;
+
+- (void)leftButtonPushed;
+- (void)rightButtonPushed;
+- (void)special01ButtonPushed;
+- (void)special02ButtonPushed;
+- (void)special03ButtonPushed;
 @end

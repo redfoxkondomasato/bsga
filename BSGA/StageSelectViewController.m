@@ -692,8 +692,8 @@
  ゲーム開始
  ・セレクタを介す事でボタンが凹む描画がされる
  ************************************************/
-- (void)startGameWithStage:(int)stage level:(int)level {
-        
+- (void)startGameWithStage:(int)stage level:(int)level
+{
     [soundManager play:E_SOUND_BUTTON];
     NSArray *sendArray = [NSArray arrayWithObjects:[NSNumber numberWithInt:stage],
                           [NSNumber numberWithInt:level], nil];

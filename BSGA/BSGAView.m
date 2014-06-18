@@ -44,18 +44,32 @@
     return self;
 }
 
-/************************************************
- 破棄
- ************************************************/
-- (void)dealloc {
-    PrintLog();
-    
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    PrintLog(@"");
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        directionX = 0.0f;
+        directionY = 0.0f;
+        
+        gameState = E_GAME_STATE_LAUNCH_ANIMATION;
+        g = [[Graphics alloc] init];
+        image = nil;
+        
+        [self setContentScaleFactor:2.0f];
+        
+        playerKoma = [[PlayerKoma alloc] init];
+        
+    }
+    return self;
 }
 
 /************************************************
  セットアップ
  ************************************************/
-- (void)setup {
+- (void)setup
+{
     // ゲームデータ読み込み
     [self setGameDataEntity:[GameDataManager getGameDataEntity]];
 
@@ -164,8 +178,8 @@
 /************************************************
  定期処理
  ************************************************/
-- (void)onTick {
-    
+- (void)onTick
+{
     // サウンドをフレーム内で再生可能にする（一度再生すると同一フレーム内で再生不可となる）
     for (int i=0; i<E_SOUND_MAX; i++) {
         canPlaySound[i] = YES;
@@ -183,7 +197,8 @@
  描画
  ・定期処理
  ************************************************/
-- (void)draw {
+- (void)draw
+{
     [g clear];
     
     // 塗りつぶし
@@ -2399,7 +2414,8 @@
 /************************************************
  左ボタン押下
  ************************************************/
-- (void)leftButtonPushed {
+- (void)leftButtonPushed
+{
     
     /*
      歩しか無い場合はDISABLEを再生する
