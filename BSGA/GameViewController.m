@@ -65,11 +65,14 @@
     [gameView setDirectionKeyView:directionKeyView];
     [self.view addSubview:gameView];
     
+    [self.view bringSubviewToFront:directionKeyView];
+    [self.view bringSubviewToFront:gameButtonView];
     
-    [self.view addSubview:directionKeyView];
+    [directionKeyView resetWithX:70.0f y:390.0f]; // TODO
+//    [self.view addSubview:directionKeyView];
     
-    [gameButtonView setFrame:CGRectMake(172, 319 + headerMargin, 148, 141)];
-    [self.view addSubview:gameButtonView];
+//    [gameButtonView setFrame:CGRectMake(172, 319 + headerMargin, 148, 141)];
+//    [self.view addSubview:gameButtonView];
     
     stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [stopButton setImage:[UIImage imageNamed:@"window_bg3"] forState:UIControlStateNormal];

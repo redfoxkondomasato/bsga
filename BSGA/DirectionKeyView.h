@@ -32,6 +32,7 @@
 
 @property (nonatomic, strong) SoundManager *soundManager;
 
+- (void)resetWithX:(float)defaultX y:(float)defaultY;
 - (void)resetTouch;
 
 @end

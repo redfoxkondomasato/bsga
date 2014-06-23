@@ -11,18 +11,11 @@
 @implementation DirectionKeyView
 @synthesize soundManager;
 @synthesize isPushed;
-//@synthesize keyAlpha;
 @synthesize x, y;
 @synthesize baseX, baseY;//, baseAlpha;
 @synthesize posX, posY;
 @synthesize isMute;
 @synthesize directionX, directionY;
-/************************************************
- 破棄
- ************************************************/
-- (void)dealloc {
-    PrintLog();
-}
 
 /************************************************
  view生成時
@@ -38,6 +31,21 @@
         
     } else {
    //     baseAlpha = 0.0f;
+    }
+}
+
+- (void)resetWithX:(float)defaultX y:(float)defaultY
+{
+    // 位置固定
+    if (kControllerStyle == 0) {
+        baseX = defaultX;
+        baseY = defaultY;
+        x = defaultX;// 70
+        y = defaultY;// 390
+        //     baseAlpha = 1.0f;
+        
+    } else {
+        //     baseAlpha = 0.0f;
     }
 }
 
