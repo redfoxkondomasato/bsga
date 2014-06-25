@@ -55,9 +55,10 @@
     {
         headerMargin = 20.0f;
     }
-
+    
     gameView = [[BSGAView alloc] initWithFrame:CGRectMake(0, headerMargin, self.view.frame.size.width, self.view.frame.size.height)];
 
+    
     [gameView setStageEntity:stageEntity];
     [gameView setLevel:level];
     [gameView setStageNumber:stageNumber];
@@ -199,16 +200,6 @@
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];    
     [layer addAnimation:animation forKey:@"transformAnimationAppear"];
 
-    /*
-     
-    [[self view] setAlpha:0.0f];
-    
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         [[self view] setAlpha:1.0f];
-                     }
-     ];
-     */
 
 }
 

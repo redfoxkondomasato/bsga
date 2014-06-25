@@ -203,7 +203,7 @@
     
     // 塗りつぶし
     [g setColor:rgb(bgColor.r, bgColor.g, bgColor.b)];
-    [g fillRect_x:0 y:0 w:640 h:960];
+    [g fillRect_x:0 y:0 w:640 h:1136];
     
     // 星を描画
     [self drawStar];

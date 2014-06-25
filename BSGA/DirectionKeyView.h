@@ -8,16 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SoundManager.h"
-@interface DirectionKeyView : UIView {
+@interface DirectionKeyView : UIView
+{
     
-
 }
-//@property (nonatomic, assign) id delegate;
-//@property (nonatomic) float keyAlpha;
 @property (nonatomic) BOOL isPushed;
 @property (nonatomic) float x;
 @property (nonatomic) float y;
-//@property (nonatomic) float baseAlpha;
 @property (nonatomic) float baseX;
 @property (nonatomic) float baseY;
 @property (nonatomic) float posX;
@@ -36,10 +33,3 @@
 - (void)resetTouch;
 
 @end
-/*
-@protocol DirectionKeyViewDelegate
-
-- (void)sendDirectionKeyWithX:(float)x y:(float)y;
-
-@end
-*/
