@@ -511,7 +511,7 @@ angle:(float)angle {
     }
     else
     {
-        PrintLog(@"問題ないimage");
+        // 問題ないイメージ
     }
     
     image.width =image.width/2;

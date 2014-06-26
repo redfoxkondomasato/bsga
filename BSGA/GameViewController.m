@@ -69,6 +69,9 @@
     [self.view bringSubviewToFront:directionKeyView];
     [self.view bringSubviewToFront:gameButtonView];
     
+    PrintLog(@"direction y = %f  h = %f", directionKeyView.frame.origin.y, directionKeyView.frame.size.height);
+    PrintLog(@"direction y = %f  h = %f", directionKeyImageView.frame.origin.y, directionKeyImageView.frame.size.height);
+    
     [directionKeyView resetWithX:70.0f y:390.0f]; // TODO
 //    [self.view addSubview:directionKeyView];
     

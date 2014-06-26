@@ -162,6 +162,7 @@
 								  NSFontAttributeName : font,
                                   NSBackgroundColorAttributeName : bgcolor};
 
+    // iOS7のみ。
 	CGRect rect = [text boundingRectWithSize:CGSizeMake(512.0f, 512.0f)
                                      options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes:attributes
@@ -171,7 +172,7 @@
     
 
     [text sizeWithFont:font constrainedToSize:CGSizeMake(512,512)
-         lineBreakMode:UILineBreakModeWordWrap];
+         lineBreakMode:NSLineBreakByWordWrapping];
     
     int width  = (int)(rect.size.width);
     int height = (int)(rect.size.height);
@@ -179,7 +180,7 @@
     [label setText:text];
     [label setFont:font];
     [label setTextColor:color];
-    [label setTextAlignment:UITextAlignmentLeft];
+    [label setTextAlignment:NSTextAlignmentLeft];
     [label setBackgroundColor:bgcolor];
     [label setNumberOfLines:0];
     
