@@ -12,7 +12,6 @@
     
 }
 
-@property(nonatomic, strong) IBOutlet UILabel *numberLabel;
 @property(nonatomic, strong) IBOutlet UILabel *launchCountLabel;
 @property(nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property(nonatomic, strong) IBOutlet UILabel *countryLabel;

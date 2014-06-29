@@ -241,8 +241,10 @@
 /************************************************
  ビュー表示前
  ************************************************/
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     CATransform3D transformFromFlip = CATransform3DMakeRotation(M_PI-0.05f, 0.0f, 1.0f, 1.0f);
     transformFromFlip = CATransform3DScale(transformFromFlip, kFlipAnimationScale, kFlipAnimationScale, 1.0f);

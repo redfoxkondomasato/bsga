@@ -762,6 +762,7 @@
 		9E10CB7B1542FD5C004888DF /* Top */ = {
 			isa = PBXGroup;
 			children = (
+				9E2526CA158F4D110010833A /* MemoCell */,
 				9E10CB7C1542FDF5004888DF /* TopViewController.h */,
 				9E10CB7D1542FDF5004888DF /* TopViewController.m */,
 				9E10CB7E1542FDF5004888DF /* TopViewController.xib */,
@@ -861,7 +862,6 @@
 				9E1F16661566908E00425C99 /* MemoViewController.h */,
 				9E1F16671566908E00425C99 /* MemoViewController.m */,
 				9E1F16681566908E00425C99 /* MemoViewController.xib */,
-				9E2526CA158F4D110010833A /* MemoCell */,
 			);
 			name = MEMO;
 			sourceTree = "<group>";

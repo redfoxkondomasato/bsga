@@ -13,14 +13,8 @@
 @synthesize stageEntity;
 @synthesize level;
 @synthesize stageNumber;
-/************************************************
- 破棄
- ************************************************/
-- (void)dealloc {
-    PrintLog();
-        
-    
-}
+
+
 
 /************************************************
  初期化
@@ -54,7 +48,17 @@
     [gameButtonView setDelegate:self];
     
     // ゲームビューの初期化処理
-    gameView = [[BSGAView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    PrintLog(@"game view controller frame = %@", NSStringFromCGRect(self.view.frame));
+    
+    CGFloat headerMargin = 0.0f;
+    if (self.view.frame.size.height == 568.0f)
+    {
+        headerMargin = 20.0f;
+    }
+    
+    gameView = [[BSGAView alloc] initWithFrame:CGRectMake(0, headerMargin, self.view.frame.size.width, self.view.frame.size.height)];
+
+    
     [gameView setStageEntity:stageEntity];
     [gameView setLevel:level];
     [gameView setStageNumber:stageNumber];
@@ -62,29 +66,35 @@
     [gameView setDirectionKeyView:directionKeyView];
     [self.view addSubview:gameView];
     
+    [self.view bringSubviewToFront:directionKeyView];
+    [self.view bringSubviewToFront:gameButtonView];
     
-    [self.view addSubview:directionKeyView];
+    PrintLog(@"direction y = %f  h = %f", directionKeyView.frame.origin.y, directionKeyView.frame.size.height);
+    PrintLog(@"direction y = %f  h = %f", directionKeyImageView.frame.origin.y, directionKeyImageView.frame.size.height);
     
-    [gameButtonView setFrame:CGRectMake(172, 319, 148, 141)];
-    [self.view addSubview:gameButtonView];
+    [directionKeyView resetWithX:70.0f y:390.0f]; // TODO
+//    [self.view addSubview:directionKeyView];
+    
+//    [gameButtonView setFrame:CGRectMake(172, 319 + headerMargin, 148, 141)];
+//    [self.view addSubview:gameButtonView];
     
     stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [stopButton setImage:[UIImage imageNamed:@"window_bg3"] forState:UIControlStateNormal];
-    [stopButton setFrame:CGRectMake(0, 0, 320, 156)];
+    [stopButton setFrame:CGRectMake(0, headerMargin, 320, 156)];
     [stopButton setHighlighted:YES];
     [stopButton setShowsTouchWhenHighlighted:YES];
     [self.view addSubview:stopButton];
 
     leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setImage:[UIImage imageNamed:@"window_bg3"] forState:UIControlStateNormal];
-    [leftButton setFrame:CGRectMake(140, 254, 90, 66)];
+    [leftButton setFrame:CGRectMake(140, 254 + headerMargin, 90, 66)];
     [leftButton setHighlighted:YES];
     [leftButton setShowsTouchWhenHighlighted:YES];
     [self.view addSubview:leftButton];
     
     rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setImage:[UIImage imageNamed:@"window_bg3"] forState:UIControlStateNormal];
-    [rightButton setFrame:CGRectMake(230, 254, 90, 66)];
+    [rightButton setFrame:CGRectMake(230, 254 + headerMargin, 90, 66)];
     [rightButton setHighlighted:YES];
     [rightButton setShowsTouchWhenHighlighted:YES];
     [self.view addSubview:rightButton];
@@ -95,7 +105,7 @@
 
     [UIView animateWithDuration:1.0f
                           delay:0.5f
-                        options:UIViewAnimationCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          [stopButton setAlpha:0.0f];
                          [leftButton setAlpha:0.0f];
@@ -116,19 +126,19 @@
     [rightButton addTarget:gameView action:@selector(rightButtonPushed) forControlEvents:UIControlEventTouchDown];
     
     UIButton *special01Button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [special01Button setFrame:CGRectMake(0, 156, 320/3.0f, 98)];
+    [special01Button setFrame:CGRectMake(0, 156 + headerMargin, 320/3.0f, 98)];
     [special01Button addTarget:gameView
                         action:@selector(special01ButtonPushed) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:special01Button];
 
     UIButton *special02Button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [special02Button setFrame:CGRectMake(320/3.0f, 156, 320/3.0f, 98)];
+    [special02Button setFrame:CGRectMake(320/3.0f, 156 + headerMargin, 320/3.0f, 98)];
     [special02Button addTarget:gameView 
                         action:@selector(special02ButtonPushed) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:special02Button];
     
     UIButton *special03Button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [special03Button setFrame:CGRectMake(320*2/3.0f, 156, 320/3.0f, 98)];
+    [special03Button setFrame:CGRectMake(320*2/3.0f, 156 + headerMargin, 320/3.0f, 98)];
     [special03Button addTarget:gameView
                         action:@selector(special03ButtonPushed) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:special03Button];
@@ -193,16 +203,6 @@
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];    
     [layer addAnimation:animation forKey:@"transformAnimationAppear"];
 
-    /*
-     
-    [[self view] setAlpha:0.0f];
-    
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         [[self view] setAlpha:1.0f];
-                     }
-     ];
-     */
 
 }
 
@@ -308,7 +308,6 @@
                                     delegate:self 
                            cancelButtonTitle:@"MENU"
                            otherButtonTitles:@"RESUME", nil] show];
-//        [directionKeyView setKeyAlpha:0];
         [directionKeyView resetTouch];
         [directionKeyView setNeedsDisplay];
     } 

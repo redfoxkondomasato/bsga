@@ -17,17 +17,14 @@
 #import "BSGAView.h"
 #import "StageEntity.h"
 @interface GameViewController : UIViewController<UIAlertViewDelegate, GameButtonViewDelegate> {
-//    IBOutlet GameView *gameView;
+
     BSGAView *gameView;
     IBOutlet DirectionKeyView *directionKeyView;
     IBOutlet GameButtonView *gameButtonView;
     
     IBOutlet UIImageView *gameButtonImageView;
     IBOutlet UIImageView *directionKeyImageView;
-    
-//    IBOutlet UIView *upperShadowView;
-//    IBOutlet UIView *bottomShadowView;
-    
+
     SoundManager *soundManager;
    
     UIButton *stopButton;

@@ -9,7 +9,7 @@
 #import "MemoCell.h"
 
 @implementation MemoCell
-@synthesize numberLabel, launchCountLabel, dateLabel;
+@synthesize launchCountLabel, dateLabel;
 @synthesize countryLabel, deviceLabel, deviceNameLabel;
 @synthesize shokyuLabel, chukyuLabel, jokyuLabel, chokyuLabel;
 @synthesize gacha01Label, gacha02Label, gacha03Label;
@@ -20,7 +20,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
     }
     return self;
 }
@@ -28,8 +27,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end
